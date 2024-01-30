@@ -1,9 +1,10 @@
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import useWindowResize from "../hooks/useWindowResize";
 import useApp from "../hooks/useApp";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { resetUser, setUser } from "../store/reducers/usersReducer";
 import { useGetToDoByIdQuery, useGetToDosQuery, useLazyGetToDoByIdQuery } from "../services/api";
+import Button from "../components/Button";
 
 type Step = {
   step: number
@@ -43,6 +44,10 @@ function Home() {
   const [state, dispatch] = useReducer(reducer, { step: 0 }, (step: Step) => { return step; })
 
 
+  const className = useMemo(()=>{
+    return theme == 'dark' ? 'secondary': 'primary';
+  }, [theme]);
+
   // console.log(size);
 
   // useEffect(() => {
@@ -56,10 +61,10 @@ function Home() {
     dispatch({ type: 'next' })
   }
 
-  function handleThemeChange() {
+  const handleThemeChange = useCallback(() => {
     const newTheme = theme == 'dark' ? 'light' : 'dark';
     changeTheme(newTheme);
-  }
+  }, [])
 
   function setStoreUser() {
     storeDispatch(setUser({ email: 'test@tester.com', name: '75Way' }));
@@ -75,20 +80,20 @@ function Home() {
   }
 
   useEffect(() => { getInitData(); }, [])
-
+  
   if (isLoading) {
     return <div>Loading...</div>
   }
-
+  
 
   return <div className="center">
     <h1>Name: {user.name}</h1>
     {/* <button onClick={()=> dispatch({ type: 'next' })}>{state.step} Next</button>
   <button onClick={()=> dispatch({ type: 'back' })}>{state.step} Back</button>
   <button onClick={()=> dispatch({ type: 'jump', payload: 10 })}>{state.step} Jump</button> */}
-    <button className={theme} onClick={handleThemeChange}>Change theme</button>
-    <button className={theme} onClick={setStoreUser}>Set user</button>
-    <button className={theme} onClick={resetStoreUser}>Reset user</button>
+    <Button className={className} onClick={handleThemeChange} label="Change theme" />
+    <Button className={className} onClick={setStoreUser} label="Set user" />
+    <Button className={className} onClick={resetStoreUser} label={"Reset user"} />
   </div>
 }
 export default Home;

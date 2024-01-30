@@ -7,8 +7,9 @@ import BasicLayout from './layouts/BasicLayout';
 function App() {
   return (<BrowserRouter>
     <Routes>
+    <Route index element={<Home />} />
           <Route index element={<Home />} />
-          <Route path='xwabout' element={<About />} />
+          <Route path='about' element={<About />} />
     </Routes>
   </BrowserRouter>)
 }

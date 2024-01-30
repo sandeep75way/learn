@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { api } from '../../services/api'
 
 interface UserState {
   name: string
@@ -25,7 +26,15 @@ export const userSlice = createSlice({
         state = initialState;
         return state;
       },
-  },
+  },  
+  // extraReducers: (builder) => {
+  //   builder
+  //     .addMatcher(api.endpoints.getToDos.matchFulfilled, (state, action) => {
+
+  //       state.todos =  action.payload;
+  //       return state;
+  //     })
+  //   }
 })
 
 export const { setUser, resetUser } = userSlice.actions

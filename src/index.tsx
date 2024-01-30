@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import AppProvider from './providers/AppProvider';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,11 +15,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <AppProvider>
-        <App />
-      </AppProvider>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </Provider>
+    </ErrorBoundary>
   </React.StrictMode>
 );
 

@@ -1,4 +1,13 @@
-function Button(){
-    return <button>Button</button>
+import { memo } from "react";
+
+type Props = {
+    label: string;
+    onClick: ()=>void;
+    className?: string
 }
-export default Button;
+
+function Button(props: Props){
+    const { label, onClick, className } = props;
+    return <button className={className} onClick={onClick}>{label}</button>
+}
+export default memo(Button);
